@@ -57,7 +57,7 @@ if (isset($_POST["save"])) {
 		}
 	}
 }
-if ($id) {
+if ($id !== null) {
 	$result = sql("query", DB_QUERY_SEARCH_QUESTION, ['id' => $id]);
 	$replace["{id}"] = $result->id;
 	$replace["{Titel}"] = $result->antwort;
