@@ -15,11 +15,12 @@ Dieses PHP-Projekt dient der Verwaltung und Strukturierung von Problemen, Fragen
 - `index.php` – Hauptseite zur Anzeige und Navigation der Problemstruktur
 - `edit.php` – Formular zum Bearbeiten und Hinzufügen von Einträgen
 - `functions.php` – Zentrale Funktionen (Datenbank, Fehlerbehandlung, Template-Rendering)
-- `config.php` – Konfiguration, Datenbankzugang und SQL-Templates
+- `config.php` – Grundkonfiguration, lädt die Zugangsdaten aus `dbconfig.php`
+- `dbconfig.php` – Zugangsdaten für die Datenbank
 - `prepare.php` – Initialisiert die Datenbankverbindung
-- `index.htm.tpl`, `edit.htm.tpl` – HTML-Templates für die Anzeige und Bearbeitung
+- `sql/` – Enthält alle SQL-Abfragen als einzelne Dateien
+- `templates/index.html`, `templates/edit.html` – HTML-Templates für die Anzeige und Bearbeitung
 - `error.log` – Fehlerprotokoll
-- Diverse PNG-Dateien – Icons für die Benutzeroberfläche
 
 ## Installation
 
@@ -29,13 +30,13 @@ Dieses PHP-Projekt dient der Verwaltung und Strukturierung von Problemen, Fragen
    - Webserver (z.B. Apache)
 
 2. **Datenbank:**  
-   - Lege die Tabellen `texte` und `relation` gemäß den SQL-Statements in `config.php` an.
+   - Lege die Tabellen `texte` und `relation` gemäß [`sql/create_tables.sql`](sql/create_tables.sql) an.
 
 3. **Konfiguration:**  
-   - Passe ggf. die Zugangsdaten in [`config.php`](config.php) an.
+   - Passe ggf. die Zugangsdaten in [`dbconfig.php`](dbconfig.php) an.
 
 4. **Deployment:**  
-   - Lege alle Dateien in ein Verzeichnis auf deinem Webserver.
+   - Lege alle Dateien und Ordner in ein Verzeichnis auf deinem Webserver.
 
 5. **Start:**  
    - Rufe `index.php` im Browser auf.
@@ -44,7 +45,7 @@ Dieses PHP-Projekt dient der Verwaltung und Strukturierung von Problemen, Fragen
 
 - Die Fehlerausgabe und das Logging erfolgen in die Datei [`error.log`](error.log).
 - Die Templates können nach Bedarf angepasst werden.
-- Die Navigation erfolgt über die URL-Parameter (`idstring`).
+- Die Navigation erfolgt über die URL-Parameter (`idChain`).
 
 ## Lizenz
 

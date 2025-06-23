@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="ansi">
+    <title>{Titel}</title>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <form action="edit.php?id={id}&idChain={idChain}" method="POST">
+      <button type="reset" onclick="javascript:location.href='index.php?idChain={idChain}';">	&#8853</button>
+      <button name="save" type="subbmit">&#128190;</button>
+      <fieldset>
+        <legend>Bearbeiten:</legend>
+        <legend for="titel">Titel:</legend><input type="text" name="titel" size="15" value="{Titel}" title="Titel">
+        <legend for="frage">Frage:</legend><input type="text" name="frage" size="15" value="{Frage}" title="Frage"> 
+        <legend for="text">Text:</legend><textarea name="text" rows="5" cols="50" lang="de">{Text}</textarea>
+      </fieldset>
+    </form>
+  </body>
+</html>
