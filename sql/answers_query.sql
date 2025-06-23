@@ -7,4 +7,4 @@ FROM
 WHERE
     t.id = :id
 ORDER BY
-    `p`.`answer` ASC
+    `p`.`antwort` ASC
