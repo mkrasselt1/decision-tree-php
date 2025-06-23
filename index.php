@@ -26,13 +26,14 @@ if ($idChain === '0') {
   $id = 0;
 }
 //Breadcrumbs
-$breadcrumbs = '';
-$link = '';
+$breadcrumbs = [];
 foreach ($ids as $key => $value) {
   $result = sql("query", DB_QUERY_SEARCH_QUESTION, ['id' => $value]);
-  $link .= ($value ? "-" : '') . $value;
-  $breadcrumbs .= "<a href=\"index.php?idChain=" . $link . "\">" . $result->antwort . "</a>=>";
+  $link = implode('-', array_slice($ids, 0, $key + 1));
+  $breadcrumbs[] = "<a href=\"index.php?idChain=" . $link . "\">" . $result->antwort . "</a>";
 }
+$breadcrumbs = implode('<span class="sep">›</span>', $breadcrumbs);
+
 $result = sql("query", DB_QUERY_SEARCH_QUESTION, ['id' => $ids[(count($ids) - 1)]]);
 $replace["{Order}"] = $breadcrumbs;
 $replace["{id}"] = $id = $result->id;
@@ -45,9 +46,9 @@ if (isset($ids) or is_numeric($result->id)) {
   $antworten = '';
   $result = sql("table", DB_QUERY_ANSWERS,  ['id' => $ids[(count($ids) - 1)]]);
   foreach ($result as $row) {
-    $antworten .= "<li><a href=\"index.php?idChain=" . $idChain . "-" . $row["id"] . "\"><button>" . htmlentities($row["antwort"]) . "</button></a></li>\n";
+    $antworten .= "<li><a href=\"index.php?idChain=" . $idChain . "-" . $row["id"] . "\">" . htmlentities($row["antwort"]) . "</a></li>\n";
   }
-  $antworten .= "<li><a href=\"edit.php?id=&idChain=" . $idChain . "\"><button>&#x270D;</button></a></li>\n";
+  $antworten .= "<li><a href=\"edit.php?id=&idChain=" . $idChain . "\">&#x270D;</a></li>\n";
   $replace["{Antworten}"] = $antworten;
 }
 $replace["{idChain}"] = $idChain;

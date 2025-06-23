@@ -1,22 +1,210 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="ansi">
-    <title>{Titel}</title>
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <form action="edit.php?id={id}&idChain={idChain}" method="POST">
-      <button type="reset" onclick="javascript:location.href='index.php?idChain={idChain}';">	&#8853</button>
-      <button name="save" type="subbmit">&#128190;</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{Titel}</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1976d2;
+      --accent: #e3f2fd;
+      --bg: #f9f9f9;
+      --text: #222;
+      --radius: 12px;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 1.2em 1em 1em 1em;
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .breadcrumbs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3em;
+      font-size: 0.98em;
+      margin-bottom: 0.5em;
+      color: #e3f2fd;
+      word-break: break-all;
+    }
+    .breadcrumbs a {
+      color: #fff;
+      background: rgba(25,118,210,0.18);
+      text-decoration: none;
+      padding: 0.15em 0.7em;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .breadcrumbs a:hover, .breadcrumbs a:focus {
+      background: #fff;
+      color: #1976d2;
+      outline: none;
+    }
+    .breadcrumbs .sep {
+      color: #bbdefb;
+      font-size: 1.1em;
+      margin: 0 0.1em;
+      user-select: none;
+    }
+    .breadcrumbs span:last-child {
+      font-weight: 700;
+      color: #e3f2fd;
+      background: none;
+      padding: 0 0.5em;
+    }
+    .edit-btn, .back-btn {
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.3em;
+      padding: 0.4em 0.8em;
+      margin-left: 0.5em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 1px 4px rgba(25,118,210,0.08);
+    }
+    .edit-btn:hover, .edit-btn:focus,
+    .back-btn:hover, .back-btn:focus {
+      background: var(--accent);
+      color: #0d47a1;
+      outline: none;
+    }
+    main {
+      max-width: 600px;
+      margin: 2em auto;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 12px rgba(25,118,210,0.06);
+      padding: 2em 1.2em 1.5em 1.2em;
+    }
+    h1 {
+      font-size: 2em;
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+    fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
+    label {
+      font-weight: 500;
+      color: var(--primary);
+      margin-bottom: 0.2em;
+    }
+    input[type="text"], textarea {
+      font-family: inherit;
+      font-size: 1em;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 0.7em;
+      background: var(--accent);
+      color: var(--text);
+      transition: border 0.2s, background 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+    input[type="text"]:focus, textarea:focus {
+      border: 1.5px solid var(--primary);
+      background: #fff;
+      outline: none;
+    }
+    .form-actions {
+      display: flex;
+      gap: 1em;
+      justify-content: flex-end;
+      margin-top: 1em;
+    }
+    .save-btn, .cancel-btn {
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.2em;
+      padding: 0.4em 1.2em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      box-shadow: 0 1px 4px rgba(25,118,210,0.08);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .save-btn:hover, .save-btn:focus,
+    .cancel-btn:hover, .cancel-btn:focus {
+      background: var(--accent);
+      color: #0d47a1;
+      outline: none;
+    }
+    @media (max-width: 700px) {
+      main {
+        margin: 1em 0.2em;
+        padding: 1.2em 0.5em 1em 0.5em;
+      }
+      h1 {
+        font-size: 1.3em;
+      }
+    }
+    @media (max-width: 400px) {
+      main {
+        padding: 0.7em 0.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.php?idChain={idChain}" aria-label="Zurück">
+      <button class="back-btn" title="Zurück">&#8592;</button>
+    </a>
+  </header>
+  <main>
+    <h1>Bearbeiten</h1>
+    <form action="edit.php?id={id}&idChain={idChain}" method="POST" autocomplete="off">
       <fieldset>
-        <legend>Bearbeiten:</legend>
-        <legend for="titel">Titel:</legend><input type="text" name="titel" size="15" value="{Titel}" title="Titel">
-        <legend for="frage">Frage:</legend><input type="text" name="frage" size="15" value="{Frage}" title="Frage"> 
-        <legend for="text">Text:</legend><textarea name="text" rows="5" cols="50" lang="de">{Text}</textarea>
+        <label for="titel">Titel:</label>
+        <input type="text" id="titel" name="titel" value="{Titel}" title="Titel" required>
+
+        <label for="frage">Frage:</label>
+        <input type="text" id="frage" name="frage" value="{Frage}" title="Frage" required>
+
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" rows="5" lang="de" required>{Text}</textarea>
       </fieldset>
+      <div class="form-actions">
+        <button type="submit" name="save" class="save-btn">&#128190; Speichern</button>
+        <button type="button" class="cancel-btn" onclick="location.href='index.php?idChain={idChain}'">&#8592; Abbrechen</button>
+      </div>
     </form>
-  </body>
+  </main>
+</body>
 </html>
