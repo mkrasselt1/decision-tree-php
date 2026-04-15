@@ -40,7 +40,19 @@ $replace["{id}"] = $id = $result->id;
 $replace["{Titel}"] = $result->antwort;
 $replace["{Frage}"] = $result->frage;
 $replace["{Text}"] = nl2br($result->text);
-
+$sw = (int)($result->schwierigkeit ?? 0);
+$swPageLabels = [
+  1 => ['Ein Handgriff &ndash; Das kann jeder selbst erledigen', '#e8f5e9', '#2e7d32'],
+  2 => ['Einfach &ndash; Selbst l&ouml;sbar mit etwas Aufwand', '#f1f8e9', '#558b2f'],
+  3 => ['Mittel &ndash; Erfahrung hilfreich, ggf. Techniker', '#fff3e0', '#e65100'],
+  4 => ['Schwierig &ndash; Techniker empfohlen', '#fbe9e7', '#bf360c'],
+  5 => ['Techniker erforderlich', '#fce4ec', '#c62828'],
+];
+$replace["{Schwierigkeit}"] = isset($swPageLabels[$sw])
+  ? '<div style="margin:1em 0;padding:0.6em 1em;border-radius:var(--radius);background:'
+    . $swPageLabels[$sw][1] . ';color:' . $swPageLabels[$sw][2]
+    . ';font-weight:500;">' . $swPageLabels[$sw][0] . '</div>'
+  : '';
 
 if (isset($ids) or is_numeric($result->id)) {
   $antworten = '';
