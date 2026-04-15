@@ -46,7 +46,11 @@ if (isset($ids) or is_numeric($result->id)) {
   $antworten = '';
   $result = sql("table", DB_QUERY_ANSWERS,  ['id' => $ids[(count($ids) - 1)]]);
   foreach ($result as $row) {
-    $antworten .= "<li><a href=\"index.php?idChain=" . $idChain . "-" . $row["id"] . "\">" . htmlentities($row["antwort"]) . "</a></li>\n";
+    $sw = (int)($row["schwierigkeit"] ?? 0);
+    $swLabels = [0 => '', 1 => '1-Handgriff', 2 => '2-Einfach', 3 => '3-Mittel', 4 => '4-Schwierig', 5 => '5-Techniker'];
+    $swColors = [0 => '', 1 => '#4caf50', 2 => '#8bc34a', 3 => '#ff9800', 4 => '#f44336', 5 => '#9c27b0'];
+    $swBadge = $sw > 0 ? ' <span style="font-size:0.75em;background:' . $swColors[$sw] . ';color:#fff;padding:0.15em 0.5em;border-radius:8px;margin-left:0.5em;vertical-align:middle;">' . $swLabels[$sw] . '</span>' : '';
+    $antworten .= "<li><a href=\"index.php?idChain=" . $idChain . "-" . $row["id"] . "\">" . htmlentities($row["antwort"]) . $swBadge . "</a></li>\n";
   }
   $antworten .= "<li><a href=\"edit.php?id=&idChain=" . $idChain . "\">&#x270D;</a></li>\n";
   $replace["{Antworten}"] = $antworten;

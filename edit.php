@@ -16,9 +16,13 @@ foreach ($fields as $field) {
 		"options" => ["default" => null]
 	]);
 }
+$schwierigkeit = filter_input(INPUT_POST, 'schwierigkeit', FILTER_VALIDATE_INT, [
+	"options" => ["default" => 0, "min_range" => 0, "max_range" => 5]
+]);
 
 $replace = array_fill_keys(
-	['{id}', '{Titel}', '{Frage}', '{Text}', '{lastid}'],
+	['{id}', '{Titel}', '{Frage}', '{Text}', '{lastid}',
+	 '{sel0}', '{sel1}', '{sel2}', '{sel3}', '{sel4}', '{sel5}'],
 	''
 );
 $replace["{idChain}"] = $idChain;
@@ -28,7 +32,8 @@ if (isset($_POST["save"])) {
 			"id" => $id,
 			'titel' => $titel,
 			'frage' => $frage,
-			'text' => $text
+			'text' => $text,
+			'schwierigkeit' => $schwierigkeit
 		])) {
 			header("Location: index.php?idChain=" . $idChain);
 			exit;
@@ -41,7 +46,8 @@ if (isset($_POST["save"])) {
 				'id' => null,
 				'titel' => $titel,
 				'frage' => $frage,
-				'text' => $text
+				'text' => $text,
+				'schwierigkeit' => $schwierigkeit
 			]
 		);
 		$ids = explode("-", $idChain);
@@ -64,6 +70,8 @@ if ($id !== null) {
 	$replace["{Frage}"] = $result->frage;
 	$replace["{Text}"] = $result->text;
 	$replace["{eid}"] = $result->id;
+	$sw = (int)($result->schwierigkeit ?? 0);
+	$replace["{sel$sw}"] = 'selected';
 }
 $replace["{id}"] = $id;
 $search["{idChain}"] = $idChain;

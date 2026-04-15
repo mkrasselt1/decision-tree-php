@@ -199,6 +199,16 @@
 
         <label for="text">Text:</label>
         <textarea id="text" name="text" rows="5" lang="de" required>{Text}</textarea>
+
+        <label for="schwierigkeit">Schwierigkeit:</label>
+        <select id="schwierigkeit" name="schwierigkeit" style="font-family:inherit;font-size:1em;border:1px solid var(--accent);border-radius:var(--radius);padding:0.7em;background:var(--accent);color:var(--text);width:100%;box-sizing:border-box;">
+          <option value="0" {sel0}>-- nicht gesetzt --</option>
+          <option value="1" {sel1}>1 - Ein Handgriff</option>
+          <option value="2" {sel2}>2 - Einfach</option>
+          <option value="3" {sel3}>3 - Mittel</option>
+          <option value="4" {sel4}>4 - Schwierig</option>
+          <option value="5" {sel5}>5 - Braucht Techniker</option>
+        </select>
       </fieldset>
       <div class="form-actions">
         <button type="submit" name="save" class="save-btn">&#128190; Speichern</button>

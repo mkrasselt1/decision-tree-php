@@ -3,6 +3,7 @@ UPDATE
 SET
     `antwort` = :titel,
     `frage` = :frage,
-    `text` = :text
+    `text` = :text,
+    `schwierigkeit` = :schwierigkeit
 WHERE
     `texte`.`id` = :id;

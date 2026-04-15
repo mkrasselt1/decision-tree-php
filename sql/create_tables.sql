@@ -23,7 +23,8 @@ CREATE TABLE `texte` (
   `id` int(8) NOT NULL,
   `frage` varchar(255) NOT NULL,
   `antwort` varchar(255) NOT NULL,
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  `schwierigkeit` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
