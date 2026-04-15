@@ -202,10 +202,44 @@
     <p>
       {Text}
     </p>
-    <ul>
+    <div id="filter-bar" style="display:none;margin-bottom:1em;display:flex;flex-wrap:wrap;gap:0.4em;">
+      <button class="filter-btn active" data-filter="all" style="border:none;border-radius:8px;padding:0.35em 0.8em;font-size:0.9em;cursor:pointer;font-weight:500;background:var(--primary);color:#fff;">Alle</button>
+      <button class="filter-btn" data-filter="1" style="border:none;border-radius:8px;padding:0.35em 0.8em;font-size:0.9em;cursor:pointer;font-weight:500;background:#e8f5e9;color:#2e7d32;">Handgriff</button>
+      <button class="filter-btn" data-filter="2" style="border:none;border-radius:8px;padding:0.35em 0.8em;font-size:0.9em;cursor:pointer;font-weight:500;background:#f1f8e9;color:#558b2f;">Einfach</button>
+      <button class="filter-btn" data-filter="3" style="border:none;border-radius:8px;padding:0.35em 0.8em;font-size:0.9em;cursor:pointer;font-weight:500;background:#fff3e0;color:#e65100;">Mittel</button>
+      <button class="filter-btn" data-filter="4" style="border:none;border-radius:8px;padding:0.35em 0.8em;font-size:0.9em;cursor:pointer;font-weight:500;background:#fbe9e7;color:#bf360c;">Schwierig</button>
+      <button class="filter-btn" data-filter="5" style="border:none;border-radius:8px;padding:0.35em 0.8em;font-size:0.9em;cursor:pointer;font-weight:500;background:#fce4ec;color:#c62828;">Techniker</button>
+    </div>
+    <ul id="antworten-list">
       {Antworten}
     </ul>
   </main>
+  <script>
+    (function() {
+      var list = document.getElementById('antworten-list');
+      var items = list.querySelectorAll('li[data-sw]');
+      var bar = document.getElementById('filter-bar');
+      if (items.length < 6) return;
+      bar.style.display = 'flex';
+      var btns = bar.querySelectorAll('.filter-btn');
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          btns.forEach(function(b) {
+            b.classList.remove('active');
+            b.style.outline = 'none';
+            b.style.boxShadow = 'none';
+          });
+          btn.classList.add('active');
+          btn.style.boxShadow = '0 0 0 2px var(--primary)';
+          var f = btn.getAttribute('data-filter');
+          items.forEach(function(li) {
+            li.style.display = (f === 'all' || li.getAttribute('data-sw') === f) ? '' : 'none';
+          });
+        });
+      });
+      btns[0].style.boxShadow = '0 0 0 2px var(--primary)';
+    })();
+  </script>
 </body>
 
 </html>
